@@ -1,7 +1,8 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './Home.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Movie from '../../components/Movie/Movie';
 
 function Home() {
   // const api_key = "15d2ea6d0dc1d476efbca3eba2b9bbfb"
@@ -59,26 +60,18 @@ function Home() {
           value={movieName}
           onChange = {movieNameChange}
         />
+      </header>
+
+      <body>
         {movieName && <p>Résulatat de la recherche : {movieName}</p>}
         <h2>Les 20 films les plus populaires</h2>
-        <ul>
+        <div className="movie-container">
           {movies.map(movie => (
-            <li key={movie.id}>{movie.title}</li>
-          ))}
-        </ul> 
-        {/* <ul>{movies}</ul>
-        {/* <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p> */}
-        {/* <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a> */}
-      </header>
+              <Movie key={movie.id} movie={movie} />
+            ))}
+        </div>
+
+      </body>
     </div>
   );
 }
