@@ -60,18 +60,15 @@ function Home() {
           value={movieName}
           onChange = {movieNameChange}
         />
-      </header>
-
-      <body>
         {movieName && <p>Résulatat de la recherche : {movieName}</p>}
         <h2>Les 20 films les plus populaires</h2>
-        <div className="movie-container">
+        <div className="movie-display">
           {movies.map(movie => (
               <Movie key={movie.id} movie={movie} />
             ))}
         </div>
 
-      </body>
+      </header>
     </div>
   );
 }

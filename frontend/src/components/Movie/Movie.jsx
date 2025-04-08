@@ -21,7 +21,7 @@ function Movie(props){
             className="movie-poster"/>
             <div className="movie-information">
                 <div className='movie-title'>{props.movie.title}</div>
-                <p>Sorti en {formatReleaseDate(props.movie.release_date)}</p>
+                <div className='release-date'>Sorti en {formatReleaseDate(props.movie.release_date)}</div>
             </div>
         </div>
     )

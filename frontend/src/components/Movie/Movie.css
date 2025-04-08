@@ -1,0 +1,41 @@
+.movie-container{
+    width: 220px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: #282c34;
+    box-shadow: 3px 5px 10px 15px #20232A;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.movie-container:hover{
+    transform: scale(1.2);
+}
+
+.movie-information{
+    padding: 10px;
+    padding-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.movie-poster{
+    width: 220px;
+    align-self: center;
+    
+}
+
+.movie-title{
+    font-weight: bold;
+    /* font-size: large; */
+    font-size: 80%;
+    font-style: oblique 5deg;
+    margin-bottom: 10px;
+}
+
+.release-date{
+    margin-top: auto;
+    font-size: 60%;
+}
