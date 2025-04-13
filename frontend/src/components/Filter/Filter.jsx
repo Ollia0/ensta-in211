@@ -2,16 +2,16 @@ import { useState } from "react"
 import "./Filter.css"
 
 function Filter(props){
-    const [selectedGenres, setSelectedGenres] = useState([]);
     const genres = props.genres;
+    const selectedGenres = props.selectedGenres || [];
     
     const toggleGenre = (genreId) => {
         // si le genre est déjà selectionné on l'enlève
         if (selectedGenres.includes(genreId)){
-            setSelectedGenres(selectedGenres.filter(id=>id != genreId))
+            props.onGenreChange(selectedGenres.filter(id=>id != genreId))
         }
         else{
-            setSelectedGenres([...selectedGenres, genreId]);
+            props.onGenreChange([...selectedGenres, genreId]);
         }
     }
     

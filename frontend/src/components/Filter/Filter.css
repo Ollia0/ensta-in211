@@ -40,3 +40,13 @@
 .genre-selector.selected:hover {
     background-color: #936269;
 }
+
+.filter-container h3{
+    color: #BBC7CE;
+    text-align: left;
+}
+
+.filter-container h4{
+    color: #BBC7CE;
+    text-align: left;
+}

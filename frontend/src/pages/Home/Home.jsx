@@ -9,6 +9,7 @@ function Home() {
 
   const [movieName, setMovieName] = useState('')
   // const [movies, setMovies] = useState('')
+  const [selectedGenres, setSelectedGenres] = useState([]);
   
   // update le nom du film selon l'input
   const movieNameChange = (Event) => {
@@ -63,6 +64,13 @@ function Home() {
   
   const { movies, genres } = useFetchMoviesAndGenres();
 
+  const filteredMovies = movies.filter(movie => {
+    if (selectedGenres.length === 0){
+      return true;
+    }
+    return movie.genre_ids.some(id => selectedGenres.includes(id));
+  })
+
   return (
     <div className="App">
       <header className="App-header">
@@ -84,14 +92,18 @@ function Home() {
         {/* contenu du site à gauche */}
         <div className="main-content">
           <div className="movie-display">
-            {movies.map(movie => (
+            {filteredMovies.map(movie => (
               <Movie key={movie.id} movie={movie} genres={genres}/>
             ))}
           </div>
         </div>
         {/* panneau filtre à droite*/}
         <div className="filter-panel">
-          <Filter genres={genres}/>
+          <Filter
+            genres={genres}
+            selectedGenres={selectedGenres}
+            onGenreChange={setSelectedGenres}
+            />
         </div>
       </div>
 
