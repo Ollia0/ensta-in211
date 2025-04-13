@@ -32,7 +32,7 @@ function Movie(props){
     }
 
     const genreNames = getGenreNames();
-    console.log(genreNames);
+    // console.log(genreNames);
 
     return (
         // afficheage du film
