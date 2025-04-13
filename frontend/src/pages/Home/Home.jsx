@@ -3,6 +3,7 @@ import './Home.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Movie from '../../components/Movie/Movie';
+import Filter from '../../components/Filter/Filter'
 
 function Home() {
 
@@ -90,8 +91,7 @@ function Home() {
         </div>
         {/* panneau filtre à droite*/}
         <div className="filter-panel">
-          <h3>Filtres</h3>
-          <p>filter panel TODO</p>
+          <Filter genres={genres}/>
         </div>
       </div>
 

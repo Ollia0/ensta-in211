@@ -52,8 +52,8 @@
 
 .filter-panel {
   grid-area: sidebar;
-  background-color: #1e2128;
-  box-shadow: 5px 0 10px rgba(0, 0, 0, 0.3);
+  /* background-color: #1e2128; */
+  /* box-shadow: 5px 0 10px rgba(0, 0, 0, 0.3); */
   padding: 20px;
   height: 100%;
   position: relative;
