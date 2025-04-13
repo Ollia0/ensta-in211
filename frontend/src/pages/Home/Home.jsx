@@ -18,7 +18,7 @@ function Home() {
   // récupère les 20 films les plus populaires
   const getPopularMovies = async () => {
     try {
-      const response = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_API_KEY}&page=1`);
+      const response = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_API_KEY}&language=en-US&page=1`);
       return response.data;
     }
     catch (error){
@@ -26,6 +26,7 @@ function Home() {
       return []
     }
   };
+  
 
   // récupère les 20 films les plus populaires
   const useFetchMovies = () => {

@@ -6,7 +6,7 @@
     background-color: #282c34;
     box-shadow: 3px 5px 10px 15px #20232A;
     border-radius: 20px;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .movie-container:hover{
@@ -24,7 +24,8 @@
 .movie-poster{
     width: 220px;
     align-self: center;
-    
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
 }
 
 .movie-title{
@@ -38,4 +39,57 @@
 .release-date{
     margin-top: auto;
     font-size: 60%;
+}
+
+.movie-details-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.movie-details-box {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 250px;
+    height: 100%;
+    background-color: #282c34;
+    border-radius: 20px;
+    box-shadow: 3px 5px 10px 15px #20232A;
+    padding: 15px;
+    transform: translateX(30px);
+    opacity: 0;
+    pointer-events: auto;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    overflow: auto;
+    z-index: 10;
+    box-sizing: border-box;
+}
+
+.movie-container:hover .movie-details-box {
+    transform: translateX(10px);
+    opacity: 1;
+}
+
+.movie-synopsis {
+    font-size: 60%;
+    text-align: justify;
+}
+
+.movie-details-box::-webkit-scrollbar {
+    width: 6px;
+}
+  
+.movie-details-box::-webkit-scrollbar-track {
+    background: #282c34;
+    border-radius: 3px;
+}
+  
+.movie-details-box::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: 3px;
 }

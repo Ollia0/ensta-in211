@@ -15,13 +15,26 @@ function Movie(props){
     }
 
     return (
+        // afficheage du film
         <div className="movie-container">
-            <img src={`https://image.tmdb.org/t/p/original${props.movie.poster_path}$`}
+            {/* affiche l'image*/}
+            <img src={`https://image.tmdb.org/t/p/original${props.movie.poster_path}`}
             alt={'Affiche'}
             className="movie-poster"/>
+            {/* infos sous l'image */}
             <div className="movie-information">
                 <div className='movie-title'>{props.movie.title}</div>
                 <div className='release-date'>Sorti en {formatReleaseDate(props.movie.release_date)}</div>
+            </div>
+            {/* infos suplémentaires quand over */}
+            <div className="movie-details-wrapper">
+                <div className="movie-details-box">
+                    <p className="movie-synopsis"><strong>Overview</strong> : {props.movie.overview}</p>
+                    <div className="movie-extra-info">
+                        <p>Note: {props.movie.vote_average}/10</p>
+                        <p>Votes: {props.movie.vote_count}</p>
+                    </div>
+                </div>
             </div>
         </div>
     )
