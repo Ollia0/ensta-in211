@@ -75,6 +75,12 @@
     opacity: 1;
 }
 
+.movie-genres {
+    font-size: 60%;
+    text-align: left;
+    font-style: italic;
+}
+
 .movie-synopsis {
     font-size: 60%;
     text-align: justify;

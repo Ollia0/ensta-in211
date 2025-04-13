@@ -26,27 +26,42 @@ function Home() {
       return []
     }
   };
-  
 
-  // récupère les 20 films les plus populaires
-  const useFetchMovies = () => {
+  const getGenres = async () => {
+  try {
+    const response = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_API_KEY}&language=fr-FR`);
+    return response.data.genres;
+  } 
+  catch (error) {
+    console.log("Erreur de chargement des genres");
+    return [];
+  }
+};
+
+  // récupère les 20 films les plus populaires & des codes des gens
+  const useFetchMoviesAndGenres = () => {
     const [movies, setMovies] = useState([]);
+    const [genres, setGenres] = useState([]);
 
     useEffect(() => {
-      const fetchMovies = async() => {
-        const data = await getPopularMovies();
-        console.log(data);
-        setMovies(data.results);
+      const fetchData = async() => {
+        const [moviesData, genresData] = await Promise.all([
+          getPopularMovies(),
+          getGenres()
+        ]);
+        // console.log(data);
+        setMovies(moviesData.results);
+        setGenres(genresData)
       };
   
-      fetchMovies();
+      fetchData();
       // pas besoin de teardown ici
     }, [] );
   
-    return(movies);
+    return {movies, genres};
   };
   
-  const movies = useFetchMovies();
+  const { movies, genres } = useFetchMoviesAndGenres();
 
   return (
     <div className="App">
@@ -65,7 +80,7 @@ function Home() {
         <h2>Les 20 films les plus populaires</h2>
         <div className="movie-display">
           {movies.map(movie => (
-              <Movie key={movie.id} movie={movie} />
+              <Movie key={movie.id} movie={movie} genres={genres}/>
             ))}
         </div>
 

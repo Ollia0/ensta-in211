@@ -14,6 +14,14 @@ function Movie(props){
         return `${monthsFr[month]} ${year}`;
     }
 
+    // associe l'id de genre au genre réel
+    const getGenreNames = () => {
+        return props.movie.genre_ids.map(id => props.genres.find(genre => genre.id === id)?.name)
+    }
+
+    const genreNames = getGenreNames();
+    console.log(genreNames);
+
     return (
         // afficheage du film
         <div className="movie-container">
@@ -29,6 +37,9 @@ function Movie(props){
             {/* infos suplémentaires quand over */}
             <div className="movie-details-wrapper">
                 <div className="movie-details-box">
+                    <div className="movie-genres">
+                        {genreNames.join(', ')}
+                    </div>
                     <p className="movie-synopsis"><strong>Overview</strong> : {props.movie.overview}</p>
                     <div className="movie-extra-info">
                         <p>Note: {props.movie.vote_average}/10</p>
