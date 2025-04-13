@@ -5,7 +5,6 @@ import axios from 'axios';
 import Movie from '../../components/Movie/Movie';
 
 function Home() {
-  // const api_key = "15d2ea6d0dc1d476efbca3eba2b9bbfb"
 
   const [movieName, setMovieName] = useState('')
   // const [movies, setMovies] = useState('')
@@ -66,22 +65,35 @@ function Home() {
   return (
     <div className="App">
       <header className="App-header">
+        {/* partie haute du site, pas le header normal de index */}
+      <div className="header-section">
         <h1>Filmopédia</h1>
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
         <input
           type="text"
           id="input_nom_film"
           name="input_nom_film"
           placeholder="Cherchez un film"
           value={movieName}
+          onChange={movieNameChange}
         />
-        {movieName && <p>Résulatat de la recherche : {movieName}</p>}
-        <h2>Les 20 films les plus populaires</h2>
-        <div className="movie-display">
-          {movies.map(movie => (
+        {movieName && <p>Résultat de la recherche : {movieName}</p>}
+      </div>
+
+      <div className="content-section">
+        {/* contenu du site à gauche */}
+        <div className="main-content">
+          <div className="movie-display">
+            {movies.map(movie => (
               <Movie key={movie.id} movie={movie} genres={genres}/>
             ))}
+          </div>
         </div>
+        {/* panneau filtre à droite*/}
+        <div className="filter-panel">
+          <h3>Filtres</h3>
+          <p>filter panel TODO</p>
+        </div>
+      </div>
 
       </header>
     </div>

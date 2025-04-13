@@ -1,5 +1,5 @@
 .movie-container{
-    width: 220px;
+    width: 200px;
     margin: 20px;
     display: flex;
     flex-direction: column;
@@ -22,7 +22,7 @@
 }
 
 .movie-poster{
-    width: 220px;
+    width: 200px;
     align-self: center;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
@@ -121,7 +121,7 @@
     border-radius: 4px;
     color: white;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     color:#282c34;
 }
