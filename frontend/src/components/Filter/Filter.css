@@ -1,7 +1,42 @@
-.filter-container{
-    position: relative;
+.genre-filter{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    justify-content: flex-start;
 }
 
-.genre-filter{
-    position: relative;
+.genre-selector{
+    background-color: #3a3f47;
+    color: #9ab;
+    padding: 6px 12px;
+    border-radius: 20px; /* Forme ovale */
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+    margin: 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    margin: 5px;
+    white-space: nowrap;
+    min-width: fit-content;
+}
+
+.genre-selector:hover {
+    background-color: #444a54;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.genre-selector.selected {
+    background-color: #A07178; /* Couleur verte pour sélectionné */
+    color: #fff;
+    border-color: #936269;
+    font-weight: bold;
+}
+
+.genre-selector.selected:hover {
+    background-color: #936269;
 }

@@ -2,22 +2,31 @@ import { useState } from "react"
 import "./Filter.css"
 
 function Filter(props){
-    // const [selectedGenres, setSelectedGenres] = useState([]);
+    const [selectedGenres, setSelectedGenres] = useState([]);
     const genres = props.genres;
+    
+    const toggleGenre = (genreId) => {
+        // si le genre est déjà selectionné on l'enlève
+        if (selectedGenres.includes(genreId)){
+            setSelectedGenres(selectedGenres.filter(id=>id != genreId))
+        }
+        else{
+            setSelectedGenres([...selectedGenres, genreId]);
+        }
+    }
+    
 
     return(
         <div className="filter-container">
             <h3>Filters</h3>
+            <h4>Genre</h4>
             <div className="genre-filter">
-                <h2>Genre</h2>
                 {genres.map((genre) => (
-                    <div key={genre.id} className="genre-checkbox">
-                        <input
-                            type="checkbox"
-                            id={`genre-${genre.id}`}
-                            name={genre.name}
-                        />
-                        <label htmlFor={`genre-${genre.id}`}>{genre.name}</label>
+                    <div 
+                        key={genre.id}
+                        className={`genre-selector ${selectedGenres.includes(genre.id) ? 'selected' : ''}`}
+                        onClick={() => toggleGenre(genre.id)}
+                    > {genre.name}
                     </div>
                 ))}
             </div>
