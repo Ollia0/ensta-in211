@@ -29,7 +29,7 @@ function Home() {
 
   const getGenres = async () => {
   try {
-    const response = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_API_KEY}&language=fr-FR`);
+    const response = await axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_API_KEY}`);
     return response.data.genres;
   } 
   catch (error) {
@@ -74,7 +74,6 @@ function Home() {
           name="input_nom_film"
           placeholder="Cherchez un film"
           value={movieName}
-          onChange = {movieNameChange}
         />
         {movieName && <p>Résulatat de la recherche : {movieName}</p>}
         <h2>Les 20 films les plus populaires</h2>
