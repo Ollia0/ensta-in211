@@ -9,6 +9,7 @@ function Filter(props){
     // un état local pour la valeur de l'input du nb de vote
     const [voteInputValue, setVoteInputValue] = useState(props.minVoteCount);
     const [debouncedValue, setDebouncedValue] = useState(voteInputValue);
+    const [minVoteIsEdited, setMinVoteIsEdited] = useState(false);
 
     const toggleGenre = (genreId) => {
         // si le genre est déjà selectionné on l'enlève
@@ -32,15 +33,18 @@ function Filter(props){
     const handleVoteInputChange = (e) => {
         // Accepter seulement des nombres
         const value = e.target.value.replace(/\D/g, '');
+        if (value !== props.minVoteCount.toString()) {
+            setMinVoteIsEdited(true);
+        }
         setVoteInputValue(value);
     }
 
-    // appliquer nb min vote
-    const submitVoteCount = () => {
-        // convertir en nombre valide
-        const voteCount = parseInt(voteInputValue) || 0;
-        props.onMinVoteCountChange(voteCount);
-    }
+    // // appliquer nb min vote
+    // const submitVoteCount = () => {
+    //     // convertir en nombre valide
+    //     const voteCount = parseInt(voteInputValue) || 0;
+    //     props.onMinVoteCountChange(voteCount);
+    // }
 
     // utilisation d'un debounce pour timer le changement du nb min de vote
     useEffect(() => {
@@ -55,6 +59,7 @@ function Filter(props){
         if (debouncedValue !== props.minVoteCount) {
             const voteCount = parseInt(debouncedValue) || 0;
             props.onMinVoteCountChange(voteCount);
+            setMinVoteIsEdited(false);
         }
     }, [debouncedValue]);
     
@@ -98,12 +103,12 @@ function Filter(props){
             <div className="vote-input-container">
                 <input 
                     type="text"
-                    className="vote-input"
+                    className={`vote-input ${minVoteIsEdited ? 'editing' : ''}`}
                     value={voteInputValue}
                     onChange={handleVoteInputChange}
                     placeholder="Minimum vote number"
                 />
-                
+
             </div>
         </div>
     )

@@ -143,7 +143,12 @@
 
 .vote-input:focus {
     background-color: #444a54;
-    border-color: #A07178; /* Même couleur que les genres sélectionnés */
+    border-color: #4C8577;
     transform: translateY(-2px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.vote-input.editing {
+    border-color: #A07178;
+    background-color: rgba(160, 113, 120, 0.1); 
 }
