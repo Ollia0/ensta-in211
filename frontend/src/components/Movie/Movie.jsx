@@ -14,6 +14,13 @@ function Movie(props){
         return `${monthsFr[month]} ${year}`;
     }
 
+    const cutOverview = (text) => {
+        const maxLength = 580;
+        if(!text) return 'Synopsis not found';
+        if(text.length <= maxLength) return text;
+        return text.substring(0, maxLength) +  '...';
+    }
+
     const getRatingPercentage = () => {
         return props.movie.vote_average * 10;
     }
@@ -56,7 +63,7 @@ function Movie(props){
                     <div className="movie-genres">
                         {genreNames.join(', ')}
                     </div>
-                    <p className="movie-synopsis"><strong>Overview</strong> : {props.movie.overview}</p>
+                    <p className="movie-synopsis"><strong>Overview</strong> : {cutOverview(props.movie.overview)}</p>
                     <div className="movie-extra-info">
                         <div className="rating-badge" style={{ backgroundColor: getRatingColor() }}>
                             {props.movie.vote_average.toFixed(2)}/10
