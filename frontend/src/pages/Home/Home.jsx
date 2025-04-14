@@ -11,6 +11,7 @@ function Home() {
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [sortCriteria, setSortCriteria] = useState("popularity");
   const [sortOrder, setSortOrder] = useState("desc")
+  const [minVoteCount, setMinVoteCount] = useState(1);
   
   // update le nom du film selon l'input
   const movieNameChange = (Event) => {
@@ -43,7 +44,7 @@ function Home() {
   }
 
   const fetchMovies = async (selectedGenres)  => {
-    let url = `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_API_KEY}&sort_by=${sortCriteria}.${sortOrder}`;
+    let url = `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_API_KEY}&sort_by=${sortCriteria}.${sortOrder}&vote_count.gte=${minVoteCount}`;
 
     if (selectedGenres.length > 0){
       const with_genresParam = selectedGenres.join(',');
@@ -70,7 +71,7 @@ function Home() {
       };
 
       fetchData();
-    }, [selectedGenres, sortOrder, sortCriteria]);
+    }, [selectedGenres, sortOrder, sortCriteria, minVoteCount]);
     return movies;
   }
   
@@ -113,6 +114,8 @@ function Home() {
             onSortCriteriaChange={setSortCriteria}
             sortOrder={sortOrder}
             onSortOrderChange={setSortOrder}
+            minVoteCount={minVoteCount}
+            onMinVoteCountChange={setMinVoteCount}
             />
         </div>
       </div>

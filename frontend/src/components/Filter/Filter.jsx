@@ -6,7 +6,9 @@ function Filter(props){
     const selectedGenres = props.selectedGenres || [];
     const sortOrder = props.sortOrder;
     const sortCriteria = props.sortCriteria;
-    
+    // un état local pour la valeur de l'input du nb de vote
+    const [voteInputValue, setVoteInputValue] = useState(props.minVoteCount);
+
     const toggleGenre = (genreId) => {
         // si le genre est déjà selectionné on l'enlève
         if (selectedGenres.includes(genreId)){
@@ -23,6 +25,19 @@ function Filter(props){
     // changer critère tri
     const handleSortCriteriaChange = (selectEvent) => {
         props.onSortCriteriaChange(selectEvent.target.value);
+    }
+
+    // changer nb min vote
+    const handleVoteInputChange = (e) => {
+        // Accepter seulement des nombres
+        const value = e.target.value.replace(/\D/g, '');
+        setVoteInputValue(value);
+    }
+    // appliquer nb min vote
+    const submitVoteCount = () => {
+        // Convertir en nombre et s'assurer qu'il est valide
+        const voteCount = parseInt(voteInputValue) || 0;
+        props.onMinVoteCountChange(voteCount);
     }
 
     return(
@@ -59,6 +74,23 @@ function Filter(props){
                     > {genre.name}
                     </div>
                 ))}
+            </div>
+
+            <h4>Minimum Votes</h4>
+            <div className="vote-input-container">
+                <input 
+                    type="text"
+                    className="vote-input"
+                    value={voteInputValue}
+                    onChange={handleVoteInputChange}
+                    placeholder="Minimum vote number"
+                />
+                <button 
+                    className="vote-submit-button"
+                    onClick={submitVoteCount}
+                >
+                    Apply
+                </button>
             </div>
         </div>
     )
