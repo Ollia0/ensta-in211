@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import "./Filter.css"
 
 function Filter(props){
@@ -8,6 +8,7 @@ function Filter(props){
     const sortCriteria = props.sortCriteria;
     // un état local pour la valeur de l'input du nb de vote
     const [voteInputValue, setVoteInputValue] = useState(props.minVoteCount);
+    const [debouncedValue, setDebouncedValue] = useState(voteInputValue);
 
     const toggleGenre = (genreId) => {
         // si le genre est déjà selectionné on l'enlève
@@ -33,13 +34,30 @@ function Filter(props){
         const value = e.target.value.replace(/\D/g, '');
         setVoteInputValue(value);
     }
+
     // appliquer nb min vote
     const submitVoteCount = () => {
-        // Convertir en nombre et s'assurer qu'il est valide
+        // convertir en nombre valide
         const voteCount = parseInt(voteInputValue) || 0;
         props.onMinVoteCountChange(voteCount);
     }
 
+    // utilisation d'un debounce pour timer le changement du nb min de vote
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedValue(voteInputValue);
+        }, 1000);
+        
+        return () => clearTimeout(timer);
+    }, [voteInputValue]);
+    
+    useEffect(() => {
+        if (debouncedValue !== props.minVoteCount) {
+            const voteCount = parseInt(debouncedValue) || 0;
+            props.onMinVoteCountChange(voteCount);
+        }
+    }, [debouncedValue]);
+    
     return(
         <div className="filter-container">
             <h3>Sort by :</h3>
@@ -85,12 +103,7 @@ function Filter(props){
                     onChange={handleVoteInputChange}
                     placeholder="Minimum vote number"
                 />
-                <button 
-                    className="vote-submit-button"
-                    onClick={submitVoteCount}
-                >
-                    Apply
-                </button>
+                
             </div>
         </div>
     )
