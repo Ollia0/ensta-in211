@@ -51,3 +51,74 @@
     text-align: left;
     font-size: medium;
 }
+
+/* Styles pour l'ellipse de sélection de tri */
+.sort-selector-ellipse {
+    display: flex;
+    align-items: center;
+    background-color: #3a3f47;
+    border-radius: 20px;
+    padding: 5px 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Style du dropdown */
+.sort-dropdown {
+    background: transparent;
+    border: none;
+    color: #9ab;
+    padding: 5px 10px;
+    font-size: 14px;
+    flex-grow: 1;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+}
+
+.sort-dropdown option {
+    background-color: #282c34;
+    color: #9ab;
+}
+
+/* conteneur flèche asc/desc*/
+.sort-order-arrows {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding-left: 10px;
+    border-left: 1px solid #555;
+    margin-left: 10px;
+}
+
+.up-arrow, .down-arrow {
+    font-size: 12px;
+    color: #555;
+    line-height: 0.8;
+    transition: all 0.2s ease;
+}
+
+/* when */
+.up-arrow.active, .down-arrow.active {
+    color: #C0C5C1;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.up-arrow.active {
+    transform: translateY(-1px);
+}
+
+.down-arrow.active {
+    transform: translateY(1px);
+}
+
+/* hover arrow animation*/
+.sort-order-arrows:hover .up-arrow:not(.active),
+.sort-order-arrows:hover .down-arrow:not(.active) {
+    color: #777;
+}
