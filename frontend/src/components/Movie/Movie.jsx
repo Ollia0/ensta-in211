@@ -3,15 +3,15 @@ import "./Movie.css"
 function Movie(props){
 
     const formatReleaseDate = (dateStr) => {
-        const monthsFr = [
-            'janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octorbre', 'novembre', 'décembre'
+        const months = [
+            'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
         ];
         const date = new Date(dateStr);
 
         const month = date.getMonth();
         const year = date.getFullYear();
 
-        return `${monthsFr[month]} ${year}`;
+        return `${months[month]} ${year}`;
     }
 
     const cutOverview = (text) => {
@@ -55,7 +55,7 @@ function Movie(props){
             {/* infos sous l'image */}
             <div className="movie-information">
                 <div className='movie-title'>{props.movie.title}</div>
-                <div className='release-date'>Sorti en {formatReleaseDate(props.movie.release_date)}</div>
+                <div className='release-date'>{formatReleaseDate(props.movie.release_date)}</div>
             </div>
             {/* infos suplémentaires quand over */}
             <div className="movie-details-wrapper">
