@@ -8,25 +8,12 @@ import Filter from '../../components/Filter/Filter'
 function Home() {
 
   const [movieName, setMovieName] = useState('')
-  // const [movies, setMovies] = useState('')
   const [selectedGenres, setSelectedGenres] = useState([]);
   
   // update le nom du film selon l'input
   const movieNameChange = (Event) => {
     setMovieName(Event.target.value);
   }
-
-  // récupère les 20 films les plus populaires
-  const getPopularMovies = async () => {
-    try {
-      const response = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${import.meta.env.VITE_API_KEY}&language=en-US&page=1`);
-      return response.data;
-    }
-    catch (error){
-      console.log("Erreur de chargement des films");
-      return []
-    }
-  };
 
   const getGenres = async () => {
   try {
@@ -39,37 +26,54 @@ function Home() {
   }
 };
 
-  // récupère les 20 films les plus populaires & des codes des gens
-  const useFetchMoviesAndGenres = () => {
-    const [movies, setMovies] = useState([]);
+  const useFetchGenres = () => {
     const [genres, setGenres] = useState([]);
 
     useEffect(() => {
       const fetchData = async() => {
-        const [moviesData, genresData] = await Promise.all([
-          getPopularMovies(),
-          getGenres()
-        ]);
-        // console.log(data);
-        setMovies(moviesData.results);
+        const genresData = await(getGenres());
         setGenres(genresData)
       };
-  
-      fetchData();
-      // pas besoin de teardown ici
-    }, [] );
-  
-    return {movies, genres};
-  };
-  
-  const { movies, genres } = useFetchMoviesAndGenres();
 
-  const filteredMovies = movies.filter(movie => {
-    if (selectedGenres.length === 0){
-      return true;
+      fetchData();
+    }, []);
+    return genres
+  }
+
+  const fetchMovies = async (selectedGenres)  => {
+    let url = `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_API_KEY}`;
+
+    if (selectedGenres.length > 0){
+      const with_genresParam = selectedGenres.join(',');
+      url += `&with_genres=${with_genresParam}`;
     }
-    return movie.genre_ids.some(id => selectedGenres.includes(id));
-  })
+
+    try {
+      const response = await axios.get(url);
+      return(response.data.results);
+    }
+    catch (error){
+      console.error("Erreur de chargement des films")
+      return [];
+    }
+  }
+
+  const useFetchMovies = (selectedGenres) => {
+    const [movies, setMovies] = useState([]);
+
+    useEffect(() => {
+      const fetchData = async() => {
+        const moviesData= await(fetchMovies(selectedGenres));
+        setMovies(moviesData);
+      };
+
+      fetchData();
+    }, [selectedGenres]);
+    return movies;
+  }
+  
+  const genres = useFetchGenres();
+  const movies = useFetchMovies(selectedGenres)
 
   return (
     <div className="App">
@@ -92,7 +96,7 @@ function Home() {
         {/* contenu du site à gauche */}
         <div className="main-content">
           <div className="movie-display">
-            {filteredMovies.map(movie => (
+            {movies.map(movie => (
               <Movie key={movie.id} movie={movie} genres={genres}/>
             ))}
           </div>
