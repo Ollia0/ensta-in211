@@ -4,7 +4,8 @@ import "./Filter.css"
 function Filter(props){
     const genres = props.genres;
     const selectedGenres = props.selectedGenres || [];
-    const [sortOrder, setSortOrder] = useState("desc")
+    const sortOrder = props.sortOrder;
+    const sortCriteria = props.sortCriteria;
     
     const toggleGenre = (genreId) => {
         // si le genre est déjà selectionné on l'enlève
@@ -17,16 +18,19 @@ function Filter(props){
     }
     // changer l'ordre de tri
     const toggleSortOrder = () => {
-        setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+        props.onSortOrderChange(sortOrder === "asc" ? "desc" : "asc");
     }
-    
+    // changer critère tri
+    const handleSortCriteriaChange = (selectEvent) => {
+        props.onSortCriteriaChange(selectEvent.target.value);
+    }
 
     return(
         <div className="filter-container">
             <h3>Sort by :</h3>
 
             <div className="sort-selector-ellipse">
-                <select className="sort-dropdown">
+                <select className="sort-dropdown" value={sortCriteria} onChange={handleSortCriteriaChange}>
                     <option value="popularity">Popularity</option>
                     <option value="title">Title</option>
                     <option value="release_date">Release date</option>

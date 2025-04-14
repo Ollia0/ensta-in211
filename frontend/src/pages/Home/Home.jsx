@@ -9,6 +9,8 @@ function Home() {
 
   const [movieName, setMovieName] = useState('')
   const [selectedGenres, setSelectedGenres] = useState([]);
+  const [sortCriteria, setSortCriteria] = useState("popularity");
+  const [sortOrder, setSortOrder] = useState("desc")
   
   // update le nom du film selon l'input
   const movieNameChange = (Event) => {
@@ -41,7 +43,7 @@ function Home() {
   }
 
   const fetchMovies = async (selectedGenres)  => {
-    let url = `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_API_KEY}`;
+    let url = `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_API_KEY}&sort_by=${sortCriteria}.${sortOrder}`;
 
     if (selectedGenres.length > 0){
       const with_genresParam = selectedGenres.join(',');
@@ -68,7 +70,7 @@ function Home() {
       };
 
       fetchData();
-    }, [selectedGenres]);
+    }, [selectedGenres, sortOrder, sortCriteria]);
     return movies;
   }
   
@@ -107,6 +109,10 @@ function Home() {
             genres={genres}
             selectedGenres={selectedGenres}
             onGenreChange={setSelectedGenres}
+            sortCriteria={sortCriteria}
+            onSortCriteriaChange={setSortCriteria}
+            sortOrder={sortOrder}
+            onSortOrderChange={setSortOrder}
             />
         </div>
       </div>
