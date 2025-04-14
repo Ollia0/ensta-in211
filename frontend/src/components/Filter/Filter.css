@@ -122,3 +122,28 @@
 .sort-order-arrows:hover .down-arrow:not(.active) {
     color: #777;
 }
+
+.vote-input-container {
+    display: flex;
+    margin: 10px 0 20px 0;
+    width: 100%;
+}
+
+.vote-input {
+    background-color: #3a3f47;
+    color: #9ab;
+    padding: 8px 16px;
+    border-radius: 20px; /* Forme ovale comme genre-selector */
+    font-size: 14px;
+    border: 2px solid transparent;
+    width: 100%;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.vote-input:focus {
+    background-color: #444a54;
+    border-color: #A07178; /* Même couleur que les genres sélectionnés */
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
