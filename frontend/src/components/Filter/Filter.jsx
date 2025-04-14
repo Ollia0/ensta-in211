@@ -18,7 +18,7 @@ function Filter(props){
 
     return(
         <div className="filter-container">
-            <h3>Filters</h3>
+            <h3>Sort by :</h3>
             <h4>Genre</h4>
             <div className="genre-filter">
                 {genres.map((genre) => (
