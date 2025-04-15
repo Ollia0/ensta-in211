@@ -1,6 +1,13 @@
 import "./Movie.css"
+import { useNavigate } from 'react-router-dom';
+// import MovieDetails from '../pages/MovieDetails/MovieDetails';
 
 function Movie(props){
+    const nav = useNavigate()
+
+    const handleMovieClick = () => {
+        nav(`/movie/${props.movie.id}`);
+    }
 
     const formatReleaseDate = (dateStr) => {
         const months = [
@@ -43,7 +50,7 @@ function Movie(props){
 
     return (
         // afficheage du film
-        <div className="movie-container">
+        <div className="movie-container" onClick={handleMovieClick}>
             {/* affiche l'image*/}
             <img src={`https://image.tmdb.org/t/p/original${props.movie.poster_path}`}
             alt={'Affiche'}
