@@ -5,11 +5,26 @@ import Movie from "../entities/movie.js"
 const router = express.Router();
 
 router.get('/', function (req, res) {
+    appDataSource
+        .getRepository(Movie)
+        .find({})
+        .then(function (movies) {
+            res.json({movies: movies});
+        })
     console.log('GET /api/movies')
-    res.json({ 
-      movies: [],
-    });
+    // res.json({ 
+    //   movies: [],
+    // });
   });
+
+  /*router.get('/', function (req, res) {
+  appDataSource
+    .getRepository(User)
+    .find({})
+    .then(function (users) {
+      res.json({ users: users });
+    });
+});*/
       
 router.post('/new', function (req, res) {
     const movieRepository = appDataSource.getRepository(Movie);  
