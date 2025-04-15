@@ -10,8 +10,8 @@ import { appDataSource } from './datasource.js';
 const apiRouter = express.Router();
 
 appDataSource
-  // .initialize()
-  // .then(() => {
+  .initialize()
+  .then(() => {
     console.log('Data Source has been initialized!');
     const app = express();
 
@@ -39,7 +39,7 @@ appDataSource
     app.listen(port, () => {
       console.log(`Server listening at http://localhost:${port}`);
     });
-  // })
-  // .catch((err) => {
-  //   console.error('Error during Data Source initialization:', err);
-  // });
+  })
+  .catch((err) => {
+    console.error('Error during Data Source initialization:', err);
+  });
