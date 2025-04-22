@@ -31,7 +31,7 @@
 }
 
 .genre-selector.selected {
-    background-color: #A07178; /* Couleur verte pour sélectionné */
+    background-color: #A07178;
     color: #fff;
     border-color: #936269;
     font-weight: bold;
@@ -133,7 +133,7 @@
     background-color: #3a3f47;
     color: #9ab;
     padding: 8px 16px;
-    border-radius: 20px; /* Forme ovale comme genre-selector */
+    border-radius: 20px;
     font-size: 14px;
     border: 2px solid transparent;
     width: 100%;

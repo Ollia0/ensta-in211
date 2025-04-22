@@ -1,7 +1,62 @@
+import "./MovieDetails.css"
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useState, useEffect } from "react";
+
 function MovieDetails() {
+    const { id } = useParams();
+
+    const fetchDetails = async () => {
+        let url = `https://api.themoviedb.org/3/movie/${id}?api_key=${import.meta.env.VITE_API_KEY}`;
+        try{
+            const response = await axios.get(url);
+            return response.data;
+        }
+        catch (error){
+            console.log("Erreur lors de la récupération des détails");
+            return [];
+        }
+    }
+
+    const useFetchDetails = () => {
+        const [details, setDetails] = useState([]);
+
+        useEffect(() => {
+            const fetchData = async () => {
+                const detailsData = await fetchDetails();
+                setDetails(detailsData);
+            }
+            fetchData();
+        }, [])
+        return details;
+    }
+
+    const details = useFetchDetails();
+    console.log(details.genres)
+
     return(
-        <p>Hello world</p>
+        <div className="App">
+            <div className="movie-detail-container">
+                <div className="movie-poster-container">
+                    <img src={`https://image.tmdb.org/t/p/original${details.poster_path}`}
+                    alt={'Affiche'}
+                    className="movie-details-poster"/>
+                </div>
+                <div className="movie-informations-container">
+                    <h1>{details.title}</h1>
+                    <p className="movie-tagline">{details.tagline}</p>
+                    <div className="movie-details-genre-container">
+                        {details.genres && details.genres.map((genre) => (
+                            <span className="movie-details-genre">{genre.name}</span>
+                        ))}
+                    </div>
+                    <p>{details.overview}</p>
+                </div>
+            </div>
+        </div>
     )
 }
 
 export default MovieDetails
+
+// backdrop en arrière plan

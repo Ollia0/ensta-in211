@@ -115,6 +115,3 @@ function Filter(props){
 }
 
 export default Filter
-// {movies.map(movie => (
-//     <Movie key={movie.id} movie={movie} genres={genres}/>
-//   ))}
