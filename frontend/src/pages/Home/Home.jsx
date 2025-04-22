@@ -1,6 +1,7 @@
 // import logo from './logo.svg';
 import './Home.css';
 import { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import Movie from '../../components/Movie/Movie';
 import Filter from '../../components/Filter/Filter'
@@ -8,10 +9,14 @@ import Filter from '../../components/Filter/Filter'
 function Home() {
 
   const [movieName, setMovieName] = useState('')
-  const [selectedGenres, setSelectedGenres] = useState([]);
   const [sortCriteria, setSortCriteria] = useState("popularity");
   const [sortOrder, setSortOrder] = useState("desc")
   const [minVoteCount, setMinVoteCount] = useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedGenres, setSelectedGenres] = useState(() => {
+    const genreParam = searchParams.get('genre');
+    return genreParam ? genreParam.split(',').map(Number) : [];
+  });
   
   // update le nom du film selon l'input
   const movieNameChange = (Event) => {

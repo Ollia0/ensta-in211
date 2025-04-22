@@ -44,6 +44,7 @@
     margin: 5px;
     white-space: nowrap;
     min-width: fit-content;
+    text-decoration: none;
 }
 
 .movie-details-genre:hover {

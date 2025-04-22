@@ -1,5 +1,5 @@
 import "./MovieDetails.css"
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
@@ -46,8 +46,13 @@ function MovieDetails() {
                     <h1>{details.title}</h1>
                     <p className="movie-tagline">{details.tagline}</p>
                     <div className="movie-details-genre-container">
-                        {details.genres && details.genres.map((genre) => (
-                            <span className="movie-details-genre">{genre.name}</span>
+                        {details.genres && details.genres.map((genre) => (<Link 
+      key={genre.id}
+      to={`/?genre=${genre.id}`} 
+      className="movie-details-genre"
+    >
+      {genre.name}
+    </Link>
                         ))}
                     </div>
                     <p>{details.overview}</p>
