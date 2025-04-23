@@ -32,7 +32,8 @@ function MovieDetails() {
     }
 
     const details = useFetchDetails();
-    console.log(details.genres)
+    const release_date = new Date (details.release_date);
+    // console.log(details.genres)
 
     return(
         <div className="App">
@@ -43,19 +44,21 @@ function MovieDetails() {
                     className="movie-details-poster"/>
                 </div>
                 <div className="movie-informations-container">
-                    <h1>{details.title}</h1>
+                    <h1>{details.title} ({release_date.getFullYear()})</h1>
                     <p className="movie-tagline">{details.tagline}</p>
                     <div className="movie-details-genre-container">
-                        {details.genres && details.genres.map((genre) => (<Link 
-      key={genre.id}
-      to={`/?genre=${genre.id}`} 
-      className="movie-details-genre"
-    >
-      {genre.name}
-    </Link>
+                        {details.genres && details.genres.map((genre) => 
+                        (<Link 
+                            key={genre.id}
+                            to={`/?genre=${genre.id}`} 
+                            className="movie-details-genre"
+                        >
+                            {genre.name}
+                        </Link>
                         ))}
                     </div>
-                    <p>{details.overview}</p>
+                    <h3> Overview :</h3>
+                    <p className="movie-details-overview">{details.overview}</p>
                 </div>
             </div>
         </div>
