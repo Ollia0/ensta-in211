@@ -116,7 +116,9 @@ function SearchResults() {
       <div className="header-section">
         <h1>Filmopédia</h1>
       </div>
-
+      <div className="search-indicator-wrapper">
+        <h3 className='search-indicator'>Search results : {query}</h3>
+      </div>  
       <div className="content-section">
         {/* contenu du site à gauche */}
         <div className="main-content">
