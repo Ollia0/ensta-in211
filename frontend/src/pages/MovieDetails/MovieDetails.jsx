@@ -37,7 +37,15 @@ function MovieDetails() {
 
     return(
         <div className="App">
-            <div className="movie-detail-container">
+            <div className="movie-detail-container"
+            style={{
+                backgroundImage: `url(https://image.tmdb.org/t/p/original${details.backdrop_path})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                position: 'relative'
+            }}>
+                <div className="backdrop-overlay"></div>
                 <div className="movie-poster-container">
                     <img src={`https://image.tmdb.org/t/p/original${details.poster_path}`}
                     alt={'Affiche'}
