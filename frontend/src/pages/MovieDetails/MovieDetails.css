@@ -4,6 +4,11 @@
     padding: 50px;
     gap: 20px;
     text-align: left;
+    width: 100vw;
+    /* removing root-component padding */
+    margin-left: -20px;
+    margin-right: -20px;
+    box-sizing: border-box;
 }
 
 .movie-details-poster{
@@ -76,4 +81,5 @@
     height: 100%;
     background-color: rgb(40, 44, 52, 0.8);
     z-index: -1;
+    width: 100%;
 }
