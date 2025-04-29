@@ -2,6 +2,7 @@ import "./MovieDetails.css"
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import placeholderImage from '../../assets/images/poster_placeholder.png';
 
 function MovieDetails() {
     const { id } = useParams();
@@ -31,8 +32,16 @@ function MovieDetails() {
         return details;
     }
 
+    const formatReleaseDate = () => {
+        return !details?.release_date
+            ? "TBA"
+            : new Date(details.release_date).getFullYear();
+    }
+
     const details = useFetchDetails();
-    const release_date = new Date (details.release_date);
+    const posterSrc = details.poster_path === null
+        ? placeholderImage
+        : `https://image.tmdb.org/t/p/original${details.poster_path}`;
     // console.log(details.genres)
 
     return(
@@ -47,12 +56,12 @@ function MovieDetails() {
             }}>
                 <div className="backdrop-overlay"></div>
                 <div className="movie-poster-container">
-                    <img src={`https://image.tmdb.org/t/p/original${details.poster_path}`}
+                    <img src={posterSrc}
                     alt={'Affiche'}
                     className="movie-details-poster"/>
                 </div>
                 <div className="movie-informations-container">
-                    <h1>{details.title} ({release_date.getFullYear()})</h1>
+                    <h1>{details.title} ({formatReleaseDate()})</h1>
                     <p className="movie-tagline">{details.tagline}</p>
                     <div className="movie-details-genre-container">
                         {details.genres && details.genres.map((genre) => 

@@ -25,6 +25,7 @@
 
 .movie-poster{
     width: 200px;
+    height: 300px;
     align-self: center;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;

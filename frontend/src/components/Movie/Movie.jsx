@@ -35,6 +35,7 @@ function Movie(props){
     
     // Déterminer la couleur selon la note
     const getRatingColor = () => {
+        if(props.movie.vote_count == 0) return "#A07178"; // Neutre quand pas de vote
         const rating = props.movie.vote_average;
         if (rating >= 7) return "#21d07a"; // Vert pour les bonnes notes
         if (rating >= 5) return "#d2d531"; // Jaune pour les notes moyennes 
@@ -42,21 +43,23 @@ function Movie(props){
     }
 
     // associe l'id de genre au genre réel
-    const getGenreNames = () => {
+    const getGenreNames = (genre_ids, genres) => {
+        if(!genre_ids || genre_ids.length == 0){
+            return [];
+        }
+        else
         return props.movie.genre_ids.map(id => props.genres.find(genre => genre.id === id)?.name)
     }
 
-    const genreNames = getGenreNames();
-    const posterSrc = props.movie?.poster_path
-    ? `https://image.tmdb.org/t/p/original${props.movie.poster_path}`
-    : placeholderImage;
-    // console.log(genreNames);
+    const genreNames = getGenreNames(props.movie?.genre_ids, props.genres);
+    const posterSrc = props.movie.poster_path === null ? placeholderImage : `https://image.tmdb.org/t/p/original${props.movie.poster_path}`;
+    const hasVotes = props.movie.vote_count > 0;
 
     return (
         // afficheage du film
         <div className="movie-container" onClick={handleMovieClick}>
             {/* affiche l'image*/}
-            <img src={`https://image.tmdb.org/t/p/original${props.movie.poster_path}`}
+            <img src={posterSrc}
             alt={'Affiche'}
             className="movie-poster"/>
             {/* barre d'affichage selon la note */}
@@ -66,7 +69,8 @@ function Movie(props){
             {/* infos sous l'image */}
             <div className="movie-information">
                 <div className='movie-title'>{props.movie.title}</div>
-                <div className='release-date'>{formatReleaseDate(props.movie.release_date)}</div>
+                <div className='release-date'>{props.movie?.release_date 
+                ? formatReleaseDate(props.movie.release_date) : "To be annouced"}</div>
             </div>
             {/* infos suplémentaires quand over */}
             <div className="movie-details-wrapper">
@@ -77,7 +81,7 @@ function Movie(props){
                     <p className="movie-synopsis"><strong>Overview</strong> : {cutOverview(props.movie.overview)}</p>
                     <div className="movie-extra-info">
                         <div className="rating-badge" style={{ backgroundColor: getRatingColor() }}>
-                            {props.movie.vote_average.toFixed(2)}/10
+                        {hasVotes ? `${props.movie.vote_average.toFixed(2)}/10` : "Not Rated"}
                         </div>
                     </div>
                 </div>
@@ -87,16 +91,3 @@ function Movie(props){
 }
 
 export default Movie
-
-/*
-mediapermet d'afficher selon la taille de l'écran
-    "poster_sizes": [
-      "w92",
-      "w154",
-      "w185",
-      "w342",
-      "w500",
-      "w780",
-      "original"
-    ],
-*/
