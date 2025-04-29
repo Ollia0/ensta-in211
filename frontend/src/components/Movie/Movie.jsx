@@ -1,6 +1,7 @@
 import "./Movie.css"
 import { useNavigate } from 'react-router-dom';
 // import MovieDetails from '../pages/MovieDetails/MovieDetails';
+import placeholderImage from '../../assets/images/poster_placeholder.png';
 
 function Movie(props){
     const nav = useNavigate()
@@ -46,6 +47,9 @@ function Movie(props){
     }
 
     const genreNames = getGenreNames();
+    const posterSrc = props.movie?.poster_path
+    ? `https://image.tmdb.org/t/p/original${props.movie.poster_path}`
+    : placeholderImage;
     // console.log(genreNames);
 
     return (
