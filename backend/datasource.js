@@ -6,7 +6,7 @@ export const appDataSource = new DataSource({
   port: process.env.DATABASE_PORT,
   username: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME,
+  database: process.env.DATABASE_DATABASE,
   synchronize: false,
   entities: ['entities/*.js'],
   migrations: ['migrations/*.js'],
@@ -14,11 +14,8 @@ export const appDataSource = new DataSource({
     migrationsDir: 'migrations',
   },
   extra: {
-    ssl:
-      process.env.NODE_ENV === 'production'
-        ? false
-        : {
-            rejectUnauthorized: false,
-          },
+    ssl: {
+      rejectUnauthorized: false,
+    },
   },
 });

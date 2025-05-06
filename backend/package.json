@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "vercel-build": "npm run migration:run",
     "dev": "dotenv -- nodemon --experimental-modules ./server.js",
     "start": "dotenv -- node --experimental-modules ./server.js",
     "lint": "eslint . --fix",
