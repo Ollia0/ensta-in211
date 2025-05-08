@@ -1,16 +1,53 @@
 .Header-container {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  padding: 5px;
+  position: relative;
+  align-items: center;
+  padding: 20px;
   font-size: calc(10px + 2vmin);
+  border-bottom: 3px ridge #20232A;
 }
 
-.Header-container > :not(:last-child) {
-  margin-right: 10px;
+.logo-container {
+  position: absolute;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
-.Link {
-  font-weight: 700;
+.logo{
+  height: 40px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.search-input {
+  padding: 8px 12px;
+  border-radius: 20px 0 0 20px;
+  border: 1px solid #444;
+  background-color: #3a3f47;
   color: white;
+  min-width: 200px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.search-button {
+  padding: 8px 12px;
+  border-radius: 0 20px 20px 0;
+  border: 1px solid #444;
+  border-left: none;
+  background-color: #3a3f47;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.search-button-icon{
+  transform: rotate(-40deg);
+  display: inline-block;
 }
