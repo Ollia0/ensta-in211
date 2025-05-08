@@ -5,10 +5,10 @@
     gap: 20px;
     text-align: left;
     width: 100vw;
-    /* removing root-component padding */
-    margin-left: -20px;
-    margin-right: -20px;
     box-sizing: border-box;
+    position: relative;
+    z-index: 1; 
+    border-bottom: 2px solid #20232A;
 }
 
 .movie-details-poster{
@@ -46,8 +46,6 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 6px 12px;
-    margin: 5px;
     white-space: nowrap;
     min-width: fit-content;
     text-decoration: none;
@@ -63,18 +61,6 @@
     text-align: justify;
 }
 
-.movie-detail-container {
-    display: flex;
-    flex-direction: row;
-    padding: 50px;
-    gap: 20px;
-    text-align: left;
-    position: relative;
-    z-index: 1; 
-    border-bottom: 2px solid #20232A;
-    border-top: 2px solid #20232A
-}
-
 .backdrop-overlay {
     position: absolute;
     top: 0;
@@ -83,5 +69,4 @@
     height: 100%;
     background-color: rgb(40, 44, 52, 0.8);
     z-index: -1;
-    width: 100%;
 }
