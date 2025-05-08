@@ -16,7 +16,7 @@
 }
 
 .logo{
-  height: 40px;
+  height: 50px;
 }
 
 .search-container {
@@ -50,4 +50,16 @@
 .search-button-icon{
   transform: rotate(-40deg);
   display: inline-block;
+}
+
+.profile-picture-container{
+  position: absolute;
+  right: 25px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.profile-picture {
+  height: 50px;
 }

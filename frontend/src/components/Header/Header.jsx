@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import './Header.css';
 import logo from '../../assets/images/logo.png';
+import profile_placeholder from '../../assets/images/profilepicture_placeholder.png';
 
 const Header = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -34,6 +35,13 @@ const Header = () => {
           </button>
         </form>
       </div>
+      <Link to="/" className="profile-picture-container">
+        <img
+          src={profile_placeholder}
+          alt="Profile Picture"
+          className="profile-picture"
+        />
+      </Link>
     </div>
   );
 };
