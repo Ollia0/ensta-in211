@@ -80,3 +80,28 @@
   justify-content: center;
   position: relative;
 }
+
+.media-type-selector {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  margin-top: 40px;
+  gap: 10px;
+}
+
+.media-type-button {
+  padding: 10px 20px;
+  background-color: transparent;
+  border: none;
+  color: #424856;
+  cursor: pointer;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.media-type-button.active {
+  color: #A07178;
+}
+
+
+/* text-xl md:text-2xl font-bold p-2 bg-transparent text-center rounded-full cursor-pointer flex items-center transition-transform duration-200 transform scale-105 text-type-link */

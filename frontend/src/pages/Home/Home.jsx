@@ -7,7 +7,6 @@ import Movie from '../../components/Movie/Movie';
 import Filter from '../../components/Filter/Filter';
 
 function Home() {
-  const [movieName, setMovieName] = useState('');
   const [sortCriteria, setSortCriteria] = useState('popularity');
   const [sortOrder, setSortOrder] = useState('desc');
   const [minVoteCount, setMinVoteCount] = useState(1);
@@ -16,11 +15,12 @@ function Home() {
     const genreParam = searchParams.get('genre');
     return genreParam ? genreParam.split(',').map(Number) : [];
   });
+  const [mediaType, setMediaType] = useState('movie');
 
   const getGenres = async () => {
     try {
       const response = await axios.get(
-        `https://api.themoviedb.org/3/genre/movie/list?api_key=${import.meta.env.VITE_API_KEY}`,
+        `https://api.themoviedb.org/3/genre/${mediaType}/list?api_key=${import.meta.env.VITE_API_KEY}`,
       );
       return response.data.genres;
     } catch (error) {
@@ -39,12 +39,12 @@ function Home() {
       };
 
       fetchData();
-    }, []);
+    }, [mediaType]);
     return genres;
   };
 
   const fetchMovies = async (selectedGenres) => {
-    let url = `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_API_KEY}&sort_by=${sortCriteria}.${sortOrder}&vote_count.gte=${minVoteCount}`;
+    let url = `https://api.themoviedb.org/3/discover/${mediaType}?api_key=${import.meta.env.VITE_API_KEY}&sort_by=${sortCriteria}.${sortOrder}&vote_count.gte=${minVoteCount}`;
 
     if (selectedGenres.length > 0) {
       const with_genresParam = selectedGenres.join(',');
@@ -70,8 +70,14 @@ function Home() {
       };
 
       fetchData();
-    }, [selectedGenres, sortOrder, sortCriteria, minVoteCount]);
+    }, [selectedGenres, sortOrder, sortCriteria, minVoteCount, mediaType]);
     return movies;
+  };
+
+  const handleMediaTypeChange = (newMediaType) => {
+    if (mediaType == newMediaType) return;
+    setMediaType(newMediaType);
+    setSelectedGenres([]);
   };
 
   const genres = useFetchGenres();
@@ -80,8 +86,20 @@ function Home() {
   return (
     <div className="App">
       <header className="App-header">
-        {/* partie haute du site, pas le header normal de index */}
-        <h1>Discover</h1>
+        <div className="media-type-selector">
+          <button
+            className={`media-type-button ${mediaType === 'movie' ? 'active' : ''}`}
+            onClick={() => handleMediaTypeChange('movie')}
+          >
+            Movies
+          </button>
+          <button
+            className={`media-type-button ${mediaType === 'tv' ? 'active' : ''}`}
+            onClick={() => handleMediaTypeChange('tv')}
+          >
+            TV Shows
+          </button>
+        </div>
         <div className="content-section">
           {/* contenu du site à gauche */}
           <div className="main-content">
