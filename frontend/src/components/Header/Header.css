@@ -6,6 +6,7 @@
   padding: 20px;
   font-size: calc(10px + 2vmin);
   border-bottom: 3px ridge #20232A;
+  box-sizing: border-box;
 }
 
 .logo-container {
@@ -23,6 +24,15 @@
   display: flex;
   align-items: center;
   margin: 0 auto;
+  width: 100%;
+  max-width: 500px;
+  padding: 0 60px 0 200px;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .search-input {
@@ -31,9 +41,11 @@
   border: 1px solid #444;
   background-color: #3a3f47;
   color: white;
-  min-width: 200px;
+  flex: 1;
+  min-width: 50px;
   outline: none;
   transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
 .search-button {
