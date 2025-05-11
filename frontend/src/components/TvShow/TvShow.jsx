@@ -11,26 +11,10 @@ function TvShow(props) {
   };
 
   const formatReleaseDate = (dateStr) => {
-    const months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
     const date = new Date(dateStr);
-
-    const month = date.getMonth();
     const year = date.getFullYear();
 
-    return `${months[month]} ${year}`;
+    return `${year}`;
   };
 
   const cutOverview = (text) => {
@@ -89,9 +73,9 @@ function TvShow(props) {
       {/* infos sous l'image */}
       <div className="movie-information">
         <div className="movie-title">{props.movie.name}</div>
-        <div className="release-date">
+        <div className="air-date">
           {props.movie?.first_air_date
-            ? formatReleaseDate(props.movie.first_air_date)
+            ? `Began in ${formatReleaseDate(props.movie.first_air_date)}`
             : 'To be annouced'}
         </div>
       </div>
