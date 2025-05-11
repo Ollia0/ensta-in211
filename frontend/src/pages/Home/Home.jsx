@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import Movie from '../../components/Movie/Movie';
+import TvShow from '../../components/TvShow/TvShow';
 import Filter from '../../components/Filter/Filter';
 
 function Home() {
@@ -104,9 +105,13 @@ function Home() {
           {/* contenu du site à gauche */}
           <div className="main-content">
             <div className="movie-display">
-              {movies.map((movie) => (
-                <Movie key={movie.id} movie={movie} genres={genres} />
-              ))}
+              {movies.map((movie) =>
+                mediaType === 'movie' ? (
+                  <Movie key={movie.id} movie={movie} genres={genres} />
+                ) : (
+                  <TvShow key={movie.id} movie={movie} genres={genres} />
+                ),
+              )}
             </div>
           </div>
           {/* panneau filtre à droite*/}
