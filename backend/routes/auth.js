@@ -3,9 +3,11 @@ import { appDataSource } from '../datasource.js';
 import User from '../entities/user.js';
 import bcrypt from 'bcrypt'; // might be better to use argon2
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const router = express.Router();
-const JWT_SECRET = 'placeholder';
+const JWT_SECRET = process.env.JWT_SECRET;
 
 router.post('/register', async function (req, res) {
   try {
