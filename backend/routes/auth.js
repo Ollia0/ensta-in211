@@ -36,4 +36,44 @@ router.post('/register', async function (req, res) {
   }
 });
 
+router.post('/login', async function (req, res) {
+  try {
+    const { username, password } = req.body;
+    // authentification
+    const userRepository = appDataSource.getRepository(User);
+    const user = await userRepository.findOne({ where: { username } });
+    // on ne distingue pas les pb de mdp ou d'username !
+    // en vrai avec register on peut savoir quels sont les usernames existants mais bon
+    const validPassword = user
+      ? await bcrypt.compare(password, user.password)
+      : false;
+    if (!validPassword) {
+      return res.status(400).json({ message: 'Wrong username/password' });
+    }
+    const token = jwt.sign(
+      { id: user.id, username: user.username },
+      JWT_SECRET,
+      { expiresIn: '48h' },
+    );
+
+    res.cookie('auth_token', token, {
+      httpOnly: true,
+      maxAge: 178800000,
+      sameSite: 'strict',
+    });
+
+    return res.status(200).json({
+      message: 'Logged in',
+    });
+  } catch (error) {
+    console.error('/auth/login error:', error);
+    return res.status(500).json({ message: 'login error' });
+  }
+});
+
+router.get('/logout', (req, res) => {
+  res.clearCookie(auth_token);
+  return res.status(200).json({ message: 'Logged out' });
+});
+
 export default router;
