@@ -4,6 +4,7 @@ import logger from 'morgan';
 import cors from 'cors';
 import usersRouter from './routes/users.js';
 import movieRouter from './routes/movies.js';
+import authRouter from './routes/auth.js'
 import { routeNotFoundJsonHandler } from './services/routeNotFoundJsonHandler.js';
 import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import { appDataSource } from './datasource.js';
@@ -31,6 +32,7 @@ appDataSource
     });
     apiRouter.use('/users', usersRouter);
     apiRouter.use('/movies', movieRouter);
+    apiRouter.use('/auth', authRouter);
 
     // Register API router
     app.use('/api', apiRouter);
