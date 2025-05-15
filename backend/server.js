@@ -4,11 +4,13 @@ import logger from 'morgan';
 import cors from 'cors';
 import usersRouter from './routes/users.js';
 import movieRouter from './routes/movies.js';
-import authRouter from './routes/auth.js'
+import authRouter from './routes/auth.js';
 import { routeNotFoundJsonHandler } from './services/routeNotFoundJsonHandler.js';
 import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import { appDataSource } from './datasource.js';
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from 'url'; // Dans votre fichier principal (server.js)
+import dotenv from 'dotenv';
+dotenv.config();
 
 const apiRouter = express.Router();
 const __filename = fileURLToPath(import.meta.url);
@@ -38,10 +40,10 @@ appDataSource
     app.use('/api', apiRouter);
 
     // Register frontend
-    const publicPath = new URL("./public", import.meta.url).pathname;
+    const publicPath = new URL('./public', import.meta.url).pathname;
     app.use(express.static(publicPath));
-    app.get("*", (req, res) => {
-      res.sendFile(path.join(publicPath, "index.html"));
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(publicPath, 'index.html'));
     });
 
     // Register 404 middleware and error handler

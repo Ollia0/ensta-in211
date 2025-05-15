@@ -3,13 +3,11 @@ import { appDataSource } from '../datasource.js';
 import User from '../entities/user.js';
 import bcrypt from 'bcrypt'; // might be better to use argon2
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv';
-dotenv.config();
-
 const router = express.Router();
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || 'placeholder_dev_only';
 
 router.post('/register', async function (req, res) {
+  console.log(JWT_SECRET);
   try {
     const { username, password } = req.body;
     // tous les champs ok ?
@@ -29,7 +27,7 @@ router.post('/register', async function (req, res) {
       username: username,
       password: hashed_pswd,
     });
-    userRepository.insert(newUser);
+    await userRepository.insert(newUser);
 
     return res.status(201).json({ message: 'User registration successful' });
   } catch (error) {
@@ -74,7 +72,7 @@ router.post('/login', async function (req, res) {
 });
 
 router.get('/logout', (req, res) => {
-  res.clearCookie(auth_token);
+  res.clearCookie('auth_token');
   return res.status(200).json({ message: 'Logged out' });
 });
 
