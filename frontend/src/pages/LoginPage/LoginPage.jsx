@@ -1,13 +1,53 @@
 import './LoginPage.css';
-import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useState } from 'react';
+
+const back_url = import.meta.env.VITE_BACKEND_URL;
 
 function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [chosenForm, setChosenForm] = useState('login');
 
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post(
+        `${back_url}/auth/login`,
+        { username, password },
+        { withCredentials: true },
+      );
+
+      if (response.status === 200) {
+        navigate('/');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleRegister = async () => {
+    try {
+      const response = await axios.post(
+        `${back_url}/auth/register`,
+        { username, password },
+        { withCredentials: true },
+      );
+
+      if (response.status === 200) {
+        navigate('/');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleSubmit = async (e) => {
-    // todo
+    e.preventDefault();
+    if (chosenForm == 'login') {
+      await handleLogin();
+    } else {
+      await handleRegister();
+    }
     return;
   };
 
