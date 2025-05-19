@@ -5,7 +5,7 @@
   align-items: center;
   padding: 20px;
   font-size: calc(10px + 2vmin);
-  border-bottom: 3px ridge #20232A;
+  border-bottom: 3px ridge #20232a;
   box-sizing: border-box;
 }
 
@@ -16,7 +16,7 @@
   align-items: center;
 }
 
-.logo{
+.logo {
   height: 50px;
 }
 
@@ -59,12 +59,12 @@ form {
   transition: all 0.2s ease;
 }
 
-.search-button-icon{
+.search-button-icon {
   transform: rotate(-40deg);
   display: inline-block;
 }
 
-.profile-picture-container{
+.profile-picture-container {
   position: absolute;
   right: 25px;
   height: 100%;
@@ -73,5 +73,9 @@ form {
 }
 
 .profile-picture {
-  height: 50px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #a07178;
 }
