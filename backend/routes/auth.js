@@ -4,7 +4,23 @@ import User from '../entities/user.js';
 import bcrypt from 'bcrypt'; // might be better to use argon2
 import jwt from 'jsonwebtoken';
 const router = express.Router();
-const JWT_SECRET = process.env.JWT_SECRET || 'placeholder_dev_only';
+const JWT_SECRET = process.env.JWT_SECRET || 'placeholder';
+
+export const checkUserWithToken = (req) => {
+  try {
+    const token = req.cookies.auth_token;
+
+    if (!token) {
+      return { authenticated: false, user: null };
+    }
+
+    const decoded = jwt.verify(token, JWT_SECRET);
+    return { authenticated: true, user: decoded };
+  } catch (error) {
+    console.error('Token verification error:', error);
+    return { authenticated: false, user: null };
+  }
+};
 
 router.post('/register', async function (req, res) {
   console.log(JWT_SECRET);
@@ -78,21 +94,11 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/checkauth', (req, res) => {
-  try {
-    const token = req.cookies.auth_token;
-
-    if (!token) {
-      return res.json({ authentificated: false });
-    }
-    const decoded_token = jwt.verify(token, JWT_SECRET);
-    return res.json({
-      authenticated: true,
-      user: { username: decoded_token.username },
-    });
-  } catch (error) {
-    console.error('Erreur lors de la vérification:', error);
-    return res.json({ authentificated: false });
-  }
+  const { authenticated, user } = checkUserWithToken(req);
+  return res.json({
+    authenticated: authenticated,
+    user: authenticated ? { username: user.username } : null,
+  });
 });
 
 export default router;
