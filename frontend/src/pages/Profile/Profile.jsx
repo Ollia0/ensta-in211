@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import './Profile.css';
@@ -11,6 +11,10 @@ function Profile() {
   const [isOwnProfile, setIsOwnProfile] = useState(true);
   const [editMode, setEditMode] = useState(false);
   const [description, setDescription] = useState('');
+  const [profilePicture, setProfilePicture] = useState('');
+  const [showImageUrlInput, setShowImageUrlInput] = useState(false);
+  const [imageUrl, setImageUrl] = useState('');
+  const imageUrlInputRef = useRef(null);
   const navigate = useNavigate();
   const { username } = useParams();
 
@@ -34,7 +38,8 @@ function Profile() {
           const userResponse = await axios.get(
             `${back_url}/users/profile/${currentUser.username}`,
           );
-          setDescription(userResponse.data.description);
+          setDescription(userResponse.data.description || '');
+          setProfilePicture(userResponse.data.profilePicture || '');
           return;
         }
         // view other profil
@@ -43,7 +48,8 @@ function Profile() {
           `${back_url}/users/profile/${username}`,
         );
         setUser(userResponse.data);
-        setDescription(userResponse.data.description);
+        setDescription(userResponse.data.description || '');
+        setProfilePicture(userResponse.data.profilePicture || '');
       } catch (error) {
         console.error('Error fetching user data:', error);
         navigate('/login');
@@ -52,6 +58,13 @@ function Profile() {
 
     fetchUserData();
   }, [navigate, username]);
+
+  // Focus sur l'input quand il devient visible
+  useEffect(() => {
+    if (showImageUrlInput && imageUrlInputRef.current) {
+      imageUrlInputRef.current.focus();
+    }
+  }, [showImageUrlInput]);
 
   const handleLogout = async () => {
     try {
@@ -66,19 +79,50 @@ function Profile() {
 
   const toggleEditMode = () => {
     setEditMode(!editMode);
+    setShowImageUrlInput(false);
   };
 
   const updateProfile = async () => {
     try {
       await axios.put(
         `${back_url}/users/profile`,
-        { description },
+        {
+          description,
+          profilePicture,
+        },
         { withCredentials: true },
       );
       setEditMode(false);
-      setUser((prev) => ({ ...prev, description }));
+      setUser((prev) => ({ ...prev, description, profilePicture }));
     } catch (error) {
       console.error('Error updating profile:', error);
+    }
+  };
+
+  const toggleImageUrlInput = () => {
+    if (editMode) {
+      setShowImageUrlInput(!showImageUrlInput);
+    }
+  };
+
+  const handleImageUrlChange = (e) => {
+    setImageUrl(e.target.value);
+  };
+
+  const saveImageUrl = () => {
+    if (imageUrl.trim()) {
+      setProfilePicture(imageUrl);
+      setShowImageUrlInput(false);
+      setImageUrl('');
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      saveImageUrl();
+    } else if (e.key === 'Escape') {
+      setShowImageUrlInput(false);
+      setImageUrl('');
     }
   };
 
@@ -91,11 +135,46 @@ function Profile() {
       <div className="profile-content">
         <div className="profile-info">
           <div className="profile-avatar">
-            <img
-              src={profile_placeholder}
-              alt="Profile Picture"
-              className="profile-details-picture"
-            />
+            <div
+              className={`avatar-container ${editMode ? 'editable' : ''}`}
+              onClick={toggleImageUrlInput}
+            >
+              <img
+                src={profilePicture || profile_placeholder}
+                alt="Profile Picture"
+                className="profile-details-picture"
+              />
+              {editMode && (
+                <div className="avatar-edit-overlay">
+                  <span>Edit</span>
+                </div>
+              )}
+            </div>
+
+            {showImageUrlInput && (
+              <div className="image-url-input-container">
+                <input
+                  ref={imageUrlInputRef}
+                  type="text"
+                  placeholder="Enter image URL"
+                  value={imageUrl}
+                  onChange={handleImageUrlChange}
+                  onKeyDown={handleKeyDown}
+                  className="image-url-input"
+                />
+                <div className="image-url-actions">
+                  <button onClick={saveImageUrl} className="save-image-btn">
+                    Save
+                  </button>
+                  <button
+                    onClick={() => setShowImageUrlInput(false)}
+                    className="cancel-image-btn"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="profile-name">
