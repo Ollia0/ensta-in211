@@ -1,6 +1,7 @@
 import './LoginPage.css';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const back_url = import.meta.env.VITE_BACKEND_URL;
 
@@ -8,6 +9,21 @@ function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [chosenForm, setChosenForm] = useState('login');
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await axios.get(`${back_url}/auth/checkauth`, {
+          withCredentials: true,
+        });
+        if (response.data.authenticated) {
+          navigate('/');
+        }
+      } catch (error) {}
+    };
+    checkAuth();
+  }, [navigate]);
 
   const handleLogin = async () => {
     try {
