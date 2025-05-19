@@ -15,6 +15,15 @@ const User = new typeorm.EntitySchema({
     password: {
       type: String,
     },
+    profilePicture: {
+      type: String,
+      nullable: true,
+      default: null,
+    },
+    description: {
+      type: String,
+      default: '',
+    },
   },
 });
 
