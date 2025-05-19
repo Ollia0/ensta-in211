@@ -38,6 +38,7 @@ router.post('/register', async function (req, res) {
 
 router.post('/login', async function (req, res) {
   try {
+    console.log('coucou');
     const { username, password } = req.body;
     // authentification
     const userRepository = appDataSource.getRepository(User);

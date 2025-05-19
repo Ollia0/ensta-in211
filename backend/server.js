@@ -24,7 +24,12 @@ appDataSource
     const app = express();
 
     app.use(logger('dev'));
-    app.use(cors());
+    app.use(
+      cors({
+        credentials: true,
+        origin: (process.env.NODE_ENV = `http://localhost:3000`),
+      }),
+    );
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
 
