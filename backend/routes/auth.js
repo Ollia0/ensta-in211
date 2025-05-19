@@ -87,9 +87,10 @@ router.get('/checkauth', (req, res) => {
     const decoded_token = jwt.verify(token, JWT_SECRET);
     return res.json({
       authentificated: true,
-      user: { username: decoded.username },
+      user: { username: decoded_token.username },
     });
   } catch (error) {
+    console.error('Erreur lors de la vérification:', error);
     return res.json({ authentificated: false });
   }
 });

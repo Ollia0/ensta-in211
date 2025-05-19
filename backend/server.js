@@ -8,9 +8,10 @@ import authRouter from './routes/auth.js';
 import { routeNotFoundJsonHandler } from './services/routeNotFoundJsonHandler.js';
 import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import { appDataSource } from './datasource.js';
-import { fileURLToPath } from 'url'; // Dans votre fichier principal (server.js)
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 dotenv.config();
+import cookieParser from 'cookie-parser';
 
 const apiRouter = express.Router();
 const __filename = fileURLToPath(import.meta.url);
@@ -31,6 +32,7 @@ appDataSource
       }),
     );
     app.use(express.json());
+    app.use(cookieParser());
     app.use(express.urlencoded({ extended: false }));
 
     // Register routes
