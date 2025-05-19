@@ -77,4 +77,21 @@ router.get('/logout', (req, res) => {
   return res.status(200).json({ message: 'Logged out' });
 });
 
+router.get('/checkauth', (req, res) => {
+  try {
+    const token = req.cookies.auth_token;
+
+    if (!token) {
+      return res.json({ authentificated: false });
+    }
+    const decoded_token = jwt.verify(token, JWT_SECRET);
+    return res.json({
+      authentificated: true,
+      user: { username: decoded.username },
+    });
+  } catch (error) {
+    return res.json({ authentificated: false });
+  }
+});
+
 export default router;
