@@ -8,7 +8,7 @@ const back_url = import.meta.env.VITE_BACKEND_URL;
 
 function Profile() {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [isOwnProfile, setIsOwnProfile] = useState(true);
   const navigate = useNavigate();
   const { username } = useParams();
 
@@ -29,17 +29,15 @@ function Profile() {
           setUser(response.data.user);
           return;
         }
-
+        // view other profil
+        setIsOwnProfile(false);
         const userResponse = await axios.get(
           `${back_url}/users/profile/${username}`,
         );
         setUser(userResponse.data);
-        setLoading(false);
       } catch (error) {
         console.error('Error fetching user data:', error);
         navigate('/login');
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -78,11 +76,13 @@ function Profile() {
           </div>
         </div>
 
-        <div className="profile-actions">
-          <button className="logout-button" onClick={handleLogout}>
-            LOGOUT
-          </button>
-        </div>
+        {isOwnProfile && (
+          <div className="profile-actions">
+            <button className="logout-button" onClick={handleLogout}>
+              LOGOUT
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
