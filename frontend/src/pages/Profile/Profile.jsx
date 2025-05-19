@@ -9,6 +9,8 @@ const back_url = import.meta.env.VITE_BACKEND_URL;
 function Profile() {
   const [user, setUser] = useState(null);
   const [isOwnProfile, setIsOwnProfile] = useState(true);
+  const [editMode, setEditMode] = useState(false);
+  const [description, setDescription] = useState('');
   const navigate = useNavigate();
   const { username } = useParams();
 
@@ -24,9 +26,15 @@ function Profile() {
           navigate('/login');
           return;
         }
+
         // profil perso
         if (!username && response.data.authenticated) {
-          setUser(response.data.user);
+          const currentUser = response.data.user;
+          setUser(currentUser);
+          const userResponse = await axios.get(
+            `${back_url}/users/profile/${currentUser.username}`,
+          );
+          setDescription(userResponse.data.description);
           return;
         }
         // view other profil
@@ -35,6 +43,7 @@ function Profile() {
           `${back_url}/users/profile/${username}`,
         );
         setUser(userResponse.data);
+        setDescription(userResponse.data.description);
       } catch (error) {
         console.error('Error fetching user data:', error);
         navigate('/login');
@@ -42,7 +51,7 @@ function Profile() {
     };
 
     fetchUserData();
-  }, [navigate]);
+  }, [navigate, username]);
 
   const handleLogout = async () => {
     try {
@@ -55,12 +64,30 @@ function Profile() {
     }
   };
 
+  const toggleEditMode = () => {
+    setEditMode(!editMode);
+  };
+
+  const updateProfile = async () => {
+    try {
+      await axios.put(
+        `${back_url}/users/profile`,
+        { description },
+        { withCredentials: true },
+      );
+      setEditMode(false);
+      setUser((prev) => ({ ...prev, description }));
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
+  };
+
+  const seeProfile = () => {
+    navigate(`/profile/${user?.username}`);
+  };
+
   return (
     <div className="profile-container">
-      <div className="profile-header">
-        <h1>User Profile</h1>
-      </div>
-
       <div className="profile-content">
         <div className="profile-info">
           <div className="profile-avatar">
@@ -71,15 +98,45 @@ function Profile() {
             />
           </div>
 
-          <div className="profile-details">
+          <div className="profile-name">
             <h2>{user?.username || 'Placeholder'}</h2>
           </div>
         </div>
 
-        {isOwnProfile && (
+        {editMode ? (
+          <div className="profile-edit">
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="profile-description-edit"
+              placeholder="Write your description here..."
+            />
+            <div className="edit-actions">
+              <button className="save-button" onClick={updateProfile}>
+                Save
+              </button>
+              <button className="cancel-button" onClick={toggleEditMode}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div className="profile-description">
+            <h3>Description:</h3>
+            <p>{description || 'No description available'}</p>
+          </div>
+        )}
+
+        {isOwnProfile && !editMode && (
           <div className="profile-actions">
-            <button className="logout-button" onClick={handleLogout}>
+            <button className="profile-action-button" onClick={handleLogout}>
               LOGOUT
+            </button>
+            <button className="profile-action-button" onClick={toggleEditMode}>
+              EDIT PROFILE
+            </button>
+            <button className="profile-action-button" onClick={seeProfile}>
+              SEE PROFILE
             </button>
           </div>
         )}
