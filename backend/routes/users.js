@@ -11,7 +11,7 @@ router.get('/profile/:username', async (req, res) => {
     const userRepository = appDataSource.getRepository(User);
     const user = await userRepository.findOne({
       where: { username },
-      select: ['id', 'username'],
+      select: ['username', 'description', 'profilePicture'],
     });
 
     if (!user) {
