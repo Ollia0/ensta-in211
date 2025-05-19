@@ -35,7 +35,7 @@ const Header = () => {
           </button>
         </form>
       </div>
-      <Link to="/login" className="profile-picture-container">
+      <Link to="/profile/a" className="profile-picture-container">
         <img
           src={profile_placeholder}
           alt="Profile Picture"
